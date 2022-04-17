@@ -6,55 +6,57 @@ class CameraPreviewPage extends StatefulWidget {
   const CameraPreviewPage({Key? key}) : super(key: key);
 
   @override
-  _CameraAppState createState() => _CameraAppState();
+  CameraAppState createState() => CameraAppState();
 }
 
-class _CameraAppState extends State<CameraPreviewPage> {
-  late CameraController controller;
-  late Future _initializeCamera;
-
-  Future getCameras() async {
-    List<CameraDescription> cameras = await availableCameras();
-
-    controller = CameraController(cameras[0], ResolutionPreset.max);
-    controller.initialize();
-  }
+class CameraAppState extends State<CameraPreviewPage> {
+  late CameraController _controller;
+  bool _isInitialised = false;
 
   @override
   void initState() {
     super.initState();
-    _initializeCamera = getCameras();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      final cameras = await availableCameras();
+      _controller = CameraController(cameras[0], ResolutionPreset.max);
+      _controller.initialize().then((value) => setState(() {
+        _isInitialised = true;
+      }));
+    });
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: Expanded(
+        child: _isInitialised
+            ? AspectRatio(
+          aspectRatio: _controller.value.aspectRatio,
+          child: CameraPreview(_controller),
+        )
+            : const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
 
-    return FutureBuilder(
-        future: _initializeCamera,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.none ||
-              snapshot.connectionState == ConnectionState.waiting ||
-              snapshot.connectionState == ConnectionState.active) {
-            // Show loading indicator if data is being fetched
+  Future<String> saveImage() async{
+    var path = '';
 
-            return Container();
-          } else if (snapshot.hasError) {
-            // If data is not fetched, then show an error message
+    await _controller.takePicture().then((res) => {
+      path = res.path
+    });
 
-            return Container();
-          } else {
-            return SizedBox(
-              height: height,
-              child: CameraPreview(controller),
-            );
-          }
-        });
+    return path;
   }
 }
