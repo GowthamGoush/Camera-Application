@@ -25,8 +25,7 @@ class PaintPolygon extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     if(isInsidePolygon(points[0], recVertices) &&
-        isInsidePolygon(points[1], recVertices) &&
-        isInsidePolygon(points[2], recVertices)) {
+        isInsidePolygon(points[1], recVertices)) {
       paint.color = Colors.yellow;
     }
     else {

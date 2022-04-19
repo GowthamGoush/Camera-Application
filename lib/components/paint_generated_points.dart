@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import '../design_constants.dart';
+
 class GeneratedPoints extends CustomPainter {
   final List<Point> generatedPointsList;
 
@@ -14,13 +16,13 @@ class GeneratedPoints extends CustomPainter {
 
     final point1 = generatedPointsList[0];
     final point2 = generatedPointsList[1];
-    final point3 = generatedPointsList[2];
+    //final point3 = generatedPointsList[2];
 
-    canvas.drawCircle(Offset(point1.x.toDouble(), point1.y.toDouble()), 5, paint);
-    canvas.drawCircle(Offset(point2.x.toDouble(), point2.y.toDouble()), 5, paint);
-    canvas.drawCircle(Offset(point3.x.toDouble(), point3.y.toDouble()), 5, paint);
+    canvas.drawCircle(Offset(point1.x.toDouble(), point1.y.toDouble()), circleRadius, paint);
+    canvas.drawCircle(Offset(point2.x.toDouble(), point2.y.toDouble()), circleRadius, paint);
+    //canvas.drawCircle(Offset(point3.x.toDouble(), point3.y.toDouble()), circleRadius, paint);
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

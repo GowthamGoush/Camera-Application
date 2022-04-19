@@ -6,8 +6,6 @@ import 'package:mowito_camera_application/components/paint_random_points.dart';
 import 'package:mowito_camera_application/screens/camera_preview_page.dart';
 import 'package:mowito_camera_application/screens/image_screen.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key}) : super(key: key);
@@ -62,11 +60,6 @@ class _CameraPageState extends State<CameraPage> {
                 borderWidth: 2.0,
                 isSelected: isSelected,
                 onPressed: (index) async {
-                  // Respond to button selection
-                  // setState(() {
-                  //   isSelected[index] = !isSelected[index];
-                  // });
-
                   switch(index) {
                     case 0:
                       setState(() {
@@ -95,14 +88,5 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void dispose() {
     super.dispose();
-  }
-
-  Future<String?> saveImage(Uint8List? image) async {
-    [Permission.storage].request;
-
-    const name = 'screenshot';
-    final result = await ImageGallerySaver.saveImage(image!, name: name);
-    print(result['filePath']);
-    return result['filePath'];
   }
 }
