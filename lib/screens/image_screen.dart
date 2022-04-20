@@ -66,13 +66,16 @@ class _ImageScreenState extends State<ImageScreen> {
             ),
           ),
           Positioned(
-            bottom: 10,
+            bottom: 50,
             child: ToggleButtons(
               color: Colors.black.withOpacity(0.80),
               fillColor: Colors.white.withOpacity(0.80),
               splashColor: Colors.white.withOpacity(0.80),
               borderRadius: BorderRadius.circular(4.0),
               borderWidth: 2.0,
+              constraints: BoxConstraints.tightForFinite(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.06),
               isSelected: isSelected,
               onPressed: (index) async {
                 switch (index) {
@@ -82,20 +85,23 @@ class _ImageScreenState extends State<ImageScreen> {
                     });
                     break;
                   case 1:
-                    if(!_isPolygonActive) _isPolygonActive = true;
-                    setState(() {
-                    });
+                    if (!_isPolygonActive) _isPolygonActive = true;
+                    setState(() {});
                     break;
                   case 2:
                     final image = await screenshotController.capture();
-                    if(image == null) break;
+                    if (image == null) break;
                     final path = saveImage(image);
                     break;
                 }
               },
               children: [
-                const Icon(Icons.highlight_remove_rounded,),
-                _isPolygonActive ? const Icon(Icons.shuffle) : const Icon(Icons.format_shapes),
+                const Icon(
+                  Icons.highlight_remove_rounded,
+                ),
+                _isPolygonActive
+                    ? const Icon(Icons.shuffle)
+                    : const Icon(Icons.format_shapes),
                 const Icon(Icons.save),
               ],
             ),

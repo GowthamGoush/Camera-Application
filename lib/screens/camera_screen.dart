@@ -18,10 +18,9 @@ class _CameraPageState extends State<CameraPage> {
   GlobalKey<CameraAppState> key = GlobalKey();
 
   ScreenshotController screenshotController = ScreenshotController();
-  List<bool> isSelected = [false,false];
+  List<bool> isSelected = [false, false];
   late ValueChanged<List<Point>> onChange;
   late List<Point> _points;
-
 
   @override
   void initState() {
@@ -41,7 +40,9 @@ class _CameraPageState extends State<CameraPage> {
           alignment: FractionalOffset.center,
           children: [
             Positioned.fill(
-              child: CameraPreviewPage(key: key,),
+              child: CameraPreviewPage(
+                key: key,
+              ),
             ),
             Positioned.fill(
               child: RepaintBoundary(
@@ -51,7 +52,7 @@ class _CameraPageState extends State<CameraPage> {
               ),
             ),
             Positioned(
-              bottom: 10,
+              bottom: 50,
               child: ToggleButtons(
                 color: Colors.black.withOpacity(0.80),
                 fillColor: Colors.white.withOpacity(0.80),
@@ -59,16 +60,21 @@ class _CameraPageState extends State<CameraPage> {
                 borderRadius: BorderRadius.circular(4.0),
                 borderWidth: 2.0,
                 isSelected: isSelected,
+                constraints: BoxConstraints.tightForFinite(
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.06),
                 onPressed: (index) async {
-                  switch(index) {
+                  switch (index) {
                     case 0:
-                      setState(() {
-                      });
+                      setState(() {});
                       break;
                     case 1:
                       final imagePath = await key.currentState?.saveImage();
-                      if(imagePath == null) break;
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ImageScreen(imagePath: imagePath, generatedPointsList: _points)));
+                      if (imagePath == null) break;
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ImageScreen(
+                              imagePath: imagePath,
+                              generatedPointsList: _points)));
                       break;
                   }
                 },
@@ -83,7 +89,6 @@ class _CameraPageState extends State<CameraPage> {
       ),
     );
   }
-
 
   @override
   void dispose() {
