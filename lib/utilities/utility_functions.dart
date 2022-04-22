@@ -1,4 +1,5 @@
 import 'dart:math';
+import '../design_constants.dart';
 
 Point generateRandomPoint(int maxWidth, int maxHeight) {
   final rand = Random();
@@ -12,9 +13,9 @@ Point generateRandomPoint(int maxWidth, int maxHeight) {
 List<Point> generateMultipleRandomPoints(int maxWidth, int maxHeight) {
   List<Point> points = [];
 
-  points.add(generateRandomPoint(maxWidth, maxHeight));
-  points.add(generateRandomPoint(maxWidth, maxHeight));
-  points.add(generateRandomPoint(maxWidth, maxHeight));
+  for(int i = 0; i < maxPoints; i++) {
+    points.add(generateRandomPoint(maxWidth, maxHeight));
+  }
 
   return points;
 }
