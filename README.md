@@ -1,6 +1,6 @@
-# mowito_camera_application
+# Camera Application
 
-A new Flutter project for Mowito.
+A new Flutter project to perform given tasks using a camera.
 
 ## Getting Started
 
