@@ -23,13 +23,9 @@ class RandomPoints extends CustomPainter {
 
     _onChange(_randomPointsList);
 
-    final point1 = _randomPointsList[0];
-    final point2 = _randomPointsList[1];
-    //final point3 = _randomPointsList[2];
-
-    canvas.drawCircle(Offset(point1.x.toDouble(), point1.y.toDouble()), circleRadius, paint);
-    canvas.drawCircle(Offset(point2.x.toDouble(), point2.y.toDouble()), circleRadius, paint);
-    //canvas.drawCircle(Offset(point3.x.toDouble(), point3.y.toDouble()), circleRadius, paint);
+    for(Point pt in _randomPointsList) {
+      canvas.drawCircle(Offset(pt.x.toDouble(), pt.y.toDouble()), circleRadius, paint);
+    }
   }
 
   @override
